@@ -18,14 +18,20 @@
               </div>
 
               <div class="input-field">
-                <input id="Otvetstvenny" type="text">
-                <label for="Otvetstvenny">Ответственный</label>
+                <input id="customer" type="text">
+                <label for="customer">Заказчик</label>
+                <span class="helper-text invalid">Укажите заказчика</span>
+              </div>
+
+              <div class="input-field">
+                <input id="responsible" type="text">
+                <label for="responsible">Ответственный</label>
                 <span class="helper-text invalid">Укажите имя</span>
               </div>
 
               <div class="input-field">
-                <textarea id="Zadaniye" class="materialize-textarea"></textarea>
-                <label for="Zadaniye">Задание</label>
+                <textarea id="task" class="materialize-textarea"></textarea>
+                <label for="task">Задание</label>
                 <span class="helper-text invalid">Напишите задание</span>
               </div>
 
@@ -48,6 +54,12 @@
                 <label for="endDate">Дата завершения</label>
               </div>
 
+              <div class="input-field">
+                <input id="status" type="text">
+                <label for="status">Статус</label>
+                <span class="helper-text invalid">Укажите статус</span>
+              </div>
+
               <button class="btn waves-effect orange" type="submit">
                 Создать
                 <i class="material-icons right"></i>
@@ -59,6 +71,7 @@
     </section>
   </div>
 </template>
+
 <script setup>
 import { ref } from 'vue';
 
@@ -71,5 +84,8 @@ const addFile = () => {
 const removeFile = (index) => {
   files.value.splice(index, 1);
 };
-
 </script>
+
+<style>
+/* Стили для вашей формы */
+</style>
