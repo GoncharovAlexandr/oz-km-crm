@@ -33,10 +33,6 @@
           Войти
         </button>
       </div>
-      <p class="center">
-        Нет аккаунта?
-        <router-link to="/register">Зарегистрироваться</router-link>
-      </p>
     </div>
   </form>
 </template>
@@ -77,18 +73,7 @@ export default {
           });
     },
   },
-  created() {
-    // Проверка на наличие активной сессии пользователя
-    axios
-        .get('/check_session/')
-        .then(() => {
-          // Пользователь уже аутентифицирован
-          this.$router.push('/dashboard');
-        })
-        .catch(() => {
-          // Пользователь не аутентифицирован
-        });
-  },
+  // Не делаем проверку на активную сессию при создании компонента
 };
 </script>
 
