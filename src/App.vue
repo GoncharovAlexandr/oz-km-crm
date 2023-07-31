@@ -1,18 +1,31 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+  <div id="app">
+    <component :is="layout">
+      <router-view/>
+    </component>
+  </div>
 </template>
+<script>
+import EmptyLayout from '@/Layouts/EmptyLayout.vue'
+import MainLayout from "@/Layouts/MainLayout.vue";
+export default {
+  computed: {
+    layout(){
+      return (this.$route.meta.layout || 'empty') + '-layout'
+    }
+  }
+}
+</script>
 
 <style lang="scss">
+@import '~materialize-css/dist/css/materialize.min.css';
+@import 'assets/index.css';
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #000000;
 }
 
 nav {
@@ -20,10 +33,10 @@ nav {
 
   a {
     font-weight: bold;
-    color: #2c3e50;
+    color: #000;
 
     &.router-link-exact-active {
-      color: #42b983;
+      color: #000;
     }
   }
 }
