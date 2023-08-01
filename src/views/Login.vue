@@ -57,12 +57,11 @@ export default {
       }
 
       // Отправка запроса на сервер для аутентификации
-      axios
-          .post('/login/', {
-            username: this.username,
-            password: this.password,
-          })
-          .then(() => {
+      axios.post('/login/', {
+        username: this.username,
+        password: this.password,
+      })
+          .then((response) => {
             // Аутентификация прошла успешно
             this.$router.push('/dashboard');
           })
