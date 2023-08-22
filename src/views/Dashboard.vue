@@ -1,7 +1,7 @@
 <template>
   <div class="employee-list">
     <div class="employee-card" v-for="(employee, index) in employees" :key="index">
-      <h3>{{ employee.name }}</h3>
+      <h3 class="username">{{ employee.name }}</h3>
       <div class="task-status">
         <div class="task-status-item">
           <div class="task-status-circle active"></div>
@@ -159,5 +159,9 @@ export default {
 .efficiency-value {
   font-weight: bold;
   margin-left: 5px;
+}
+
+.username {
+  font-size: 0.33em; /* Уменьшение в 3 раза */
 }
 </style>
