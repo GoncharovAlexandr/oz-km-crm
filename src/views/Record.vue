@@ -63,7 +63,7 @@ export default {
     };
 
     const getFileDownloadUrl = (file) => {
-      return `http://192.168.5.213:8080/download_file/${getFileNameFromURL(file)}`;
+      return `https://av22.pythonanywhere.com/download_file/${getFileNameFromURL(file)}`;
     };
 
     onMounted(() => {

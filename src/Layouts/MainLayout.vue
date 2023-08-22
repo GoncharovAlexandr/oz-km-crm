@@ -12,7 +12,7 @@
       </main>
 
       <div class="fixed-action-btn">
-        <router-link class="btn-floating btn-large black" to="/categories" style="height:115px;width:115px; display: flex; justify-content: center; align-items: center;">
+        <router-link class="btn-floating btn-large black" to="/categories" style="height:50px;width:50px; display: flex; justify-content: center; align-items: center;">
           <i class="large material-icons">+</i>
         </router-link>
       </div>
