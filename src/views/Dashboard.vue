@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div v-for="(employee, index) in employees" :key="index">
+  <div class="employee-list">
+    <div class="employee-card" v-for="(employee, index) in employees" :key="index">
       <h3>{{ employee.name }}</h3>
       <div class="task-status">
         <div class="task-status-item">
@@ -62,8 +62,6 @@ export default {
           var(--completed-color, #828282) ${activePercentage}% ${activePercentage + completedPercentage}%,
           var(--overdue-color, #000000) ${activePercentage + completedPercentage}% 100%
         );
-        width: 400px;
-        height: 400px;
       `;
     },
     getEfficiencyColor(employee) {
@@ -79,27 +77,44 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.employee-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.employee-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 250px;
+}
+
 .task-status {
   display: flex;
   flex-direction: column;
+  margin-top: 10px;
 }
 
 .task-status-item {
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 
 .task-status-circle {
-  width: 20px;
-  height: 20px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
-  margin-right: 10px;
+  margin-right: 5px;
 }
 
 .task-status-label {
-  color: #fff;
+  font-size: 12px;
 }
 
 .active {
@@ -115,15 +130,14 @@ export default {
 }
 
 .chart {
-  width: 400px;
-  height: 400px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
-  margin: 0 auto;
+  margin: 10px 0;
 }
 
 .efficiency {
-  margin-top: 20px;
-  padding: 10px;
+  padding: 5px;
   text-align: center;
 }
 
