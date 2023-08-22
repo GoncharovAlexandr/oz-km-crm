@@ -74,7 +74,7 @@ const openTask = (taskId) => {
 
 onMounted(async () => {
   try {
-    const response = await axios.get('http://192.168.5.213:8080/history/');
+    const response = await axios.get('http://av22.pythonanywhere.com/history/');
     tasks.value = response.data;
   } catch (error) {
     console.error('Ошибка при получении списка задач:', error);
