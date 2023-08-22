@@ -162,6 +162,6 @@ export default {
 }
 
 .username {
-  font-size: 0.8em; /* Уменьшение в 3 раза */
+  font-size: 2em; /* Уменьшение в 3 раза */
 }
 </style>
