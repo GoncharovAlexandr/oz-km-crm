@@ -12,9 +12,8 @@
       </main>
 
       <div class="fixed-action-btn">
-        <router-link class="btn-floating btn-large black" to="/categories" style="height:115px;width:115px">
-          <i class="large material-icons">Соз
-            дать</i>
+        <router-link class="btn-floating btn-large black" to="/categories" style="height:115px;width:115px; display: flex; justify-content: center; align-items: center;">
+          <i class="large material-icons">+</i>
         </router-link>
       </div>
     </div>

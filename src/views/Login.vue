@@ -51,32 +51,47 @@ export default {
   methods: {
     submitHandler() {
       if (!this.username || !this.password) {
-        // Предупреждение о незаполненных полях
         alert('Пожалуйста, заполните все поля');
         return;
       }
 
-      // Отправка запроса на сервер для аутентификации
-      axios.post('/login/', {
-        username: this.username,
-        password: this.password,
-      })
-          .then((response) => {
-            // Аутентификация прошла успешно
-            this.$router.push('/dashboard');
-          })
-          .catch((error) => {
-            // Обработка ошибки аутентификации
-            console.error('Ошибка аутентификации:', error);
-            alert('Ошибка аутентификации');
-          });
+      // Проверка имени пользователя и пароля
+      const validUsers = [
+        {
+          username: 'Иван_Волостнов',
+          password: 'I010399V',
+        },
+        {
+          username: 'Иван_Мазур',
+          password: 'IM7182IM',
+        },
+        {
+          username: 'Дима_Винокуров',
+          password: 'DV4422DV',
+        },
+        {
+          username: 'Михаил_Волостнов',
+          password: 'MNV26010399',
+        },
+        {
+          username: 'Катя_Сидорина',
+          password: 'KS36104KS',
+        },
+        {
+          username: 'Юра_Черевако',
+          password: 'UH228UH',
+        },
+      ];
+
+      const user = validUsers.find(u => u.username === this.username && u.password === this.password);
+
+      if (user) {
+        this.$router.push('/dashboard'); // Переход на /history в случае успешной проверки
+      } else {
+        console.error('Ошибка аутентификации: неверное имя пользователя или пароль');
+        alert('Ошибка аутентификации: неверное имя пользователя или пароль');
+      }
     },
   },
-  // Не делаем проверку на активную сессию при создании компонента
 };
 </script>
-
-<style>
-/* Стили для вашей формы */
-</style>
-

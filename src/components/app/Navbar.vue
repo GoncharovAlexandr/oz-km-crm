@@ -16,8 +16,7 @@
               data-target="dropdown"
               ref="dropdown"
           >
-            Пользователь
-            <i class="material-icons right">user</i>
+            <i class="material-icons right">Выйти</i>
           </a>
 
           <ul id="dropdown" class="dropdown-content">

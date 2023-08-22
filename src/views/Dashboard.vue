@@ -1,47 +1,60 @@
 <template>
-  <div class="dashboard">
-    <div class="sidebar">
+  <div>
+    <div v-for="(employee, index) in employees" :key="index">
+      <h3>{{ employee.name }}</h3>
       <div class="task-status">
         <div class="task-status-item">
           <div class="task-status-circle active"></div>
-          <div class="task-status-label orange-text">Активные задачи ({{ activeTasks }})</div>
+          <div class="task-status-label orange-text">Активные задачи ({{ employee.activeTasks }})</div>
         </div>
         <div class="task-status-item">
           <div class="task-status-circle completed"></div>
-          <div class="task-status-label grey-text">Выполненные задачи ({{ completedTasks }})</div>
+          <div class="task-status-label grey-text">Выполненные задачи ({{ employee.completedTasks }})</div>
         </div>
         <div class="task-status-item">
           <div class="task-status-circle overdue"></div>
-          <div class="task-status-label black-text">Просроченные задачи ({{ overdueTasks }})</div>
+          <div class="task-status-label black-text">Просроченные задачи ({{ employee.overdueTasks }})</div>
         </div>
       </div>
-    </div>
-    <div class="chart-container">
-      <div class="chart" :style="chartStyle"></div>
-      <div class="efficiency" :class="efficiencyColor">
-        <div class="efficiency-text">
-          Эффективность сотрудника:
-          <span class="efficiency-value">{{ efficiency.toFixed(2) }}</span>%
+      <div class="chart-container">
+        <div class="chart" :style="getChartStyle(employee)"></div>
+        <div class="efficiency" :class="getEfficiencyColor(employee)">
+          <div class="efficiency-text">
+            Эффективность сотрудника:
+            <span class="efficiency-value">{{ employee.efficiency.toFixed(2) }}</span>%
+          </div>
         </div>
       </div>
     </div>
   </div>
 </template>
+
 <script>
+import axios from 'axios';
+
 export default {
   data() {
     return {
-      activeTasks: 30, // Замените это значение на актуальное количество активных задач
-      completedTasks: 40, // Замените это значение на актуальное количество выполненных задач
-      overdueTasks: 1, // Замените это значение на актуальное количество просроченных задач
+      employees: [],
     };
   },
-  computed: {
-    chartStyle() {
-      const totalTasks = this.activeTasks + this.completedTasks + this.overdueTasks;
-      const activePercentage = (this.activeTasks / totalTasks) * 100;
-      const completedPercentage = (this.completedTasks / totalTasks) * 100;
-      const overduePercentage = (this.overdueTasks / totalTasks) * 100;
+  mounted() {
+    this.fetchEmployeeData();
+  },
+  methods: {
+    async fetchEmployeeData() {
+      try {
+        const response = await axios.get('http://192.168.5.213:8080/get_employee_data');
+        this.employees = response.data;
+      } catch (error) {
+        console.error('Ошибка при получении данных сотрудников:', error);
+      }
+    },
+    getChartStyle(employee) {
+      const totalTasks = employee.activeTasks + employee.completedTasks + employee.overdueTasks;
+      const activePercentage = (employee.activeTasks / totalTasks) * 100;
+      const completedPercentage = (employee.completedTasks / totalTasks) * 100;
+      const overduePercentage = (employee.overdueTasks / totalTasks) * 100;
 
       return `
         background-image: conic-gradient(
@@ -53,15 +66,10 @@ export default {
         height: 400px;
       `;
     },
-    efficiency() {
-      const totalTasks = this.completedTasks + this.activeTasks + this.overdueTasks;
-      const completedPercentage = (this.completedTasks / totalTasks) * 100;
-      return completedPercentage;
-    },
-    efficiencyColor() {
-      if (this.efficiency > 80) {
+    getEfficiencyColor(employee) {
+      if (employee.efficiency > 80) {
         return 'grey';
-      } else if (this.efficiency > 50) {
+      } else if (employee.efficiency > 50) {
         return 'orange';
       } else {
         return 'black';
@@ -70,6 +78,7 @@ export default {
   },
 };
 </script>
+
 <style>
 .task-status {
   display: flex;

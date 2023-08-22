@@ -1,68 +1,102 @@
 <template>
   <div>
-    <div class="page-title">
-      <h3>Новая запись</h3>
+    <h2 class="task-title">{{ task.title }}</h2>
+    <div class="task-info">
+      <p><strong>Заказчик:</strong> {{ task.customer }}</p>
+      <p><strong>Ответственный:</strong> {{ task.responsible }}</p>
+      <p><strong>Статус:</strong> {{ task.status }}</p>
+      <p><strong>Описание:</strong> {{ task.description }}</p>
+      <p><strong>Начало:</strong> {{ task.start_date }}</p>
+      <p><strong>Окончание:</strong> {{ task.end_date }}</p>
     </div>
 
-    <form class="form">
-      <div class="input-field" >
-        <select>
-          <option
-          >name cat</option>
-        </select>
-        <label>Выберите категорию</label>
-      </div>
+    <h3 class="section-title">Прикрепленные файлы(задания):</h3>
+    <ul>
+      <li v-for="file in task.files" :key="file">
+        <a :href="getFileDownloadUrl(file)" download>{{ getFileNameFromURL(file) }}</a>
+      </li>
+    </ul>
 
-      <p>
-        <label>
-          <input
-              class="with-gap"
-              name="type"
-              type="radio"
-              value="income"
-          />
-          <span>Доход</span>
-        </label>
-      </p>
 
-      <p>
-        <label>
-          <input
-              class="with-gap"
-              name="type"
-              type="radio"
-              value="outcome"
-          />
-          <span>Расход</span>
-        </label>
-      </p>
-
-      <div class="input-field">
-        <input
-            id="amount"
-            type="number"
-        >
-        <label for="amount">Сумма</label>
-        <span class="helper-text invalid">amount пароль</span>
-      </div>
-
-      <div class="input-field">
-        <input
-            id="description"
-            type="text"
-        >
-        <label for="description">Описание</label>
-        <span
-            class="helper-text invalid">description пароль</span>
-      </div>
-
-      <button class="btn waves-effect waves-light" type="submit">
-        Создать
-        <i class="material-icons right">send</i>
-      </button>
-    </form>
+    <h3 class="section-title">Изменить статус:</h3>
+    <div class="status-change">
+      <input v-model="newStatus" type="text" placeholder="Новый статус">
+      <button @click="updateStatus">Сохранить</button>
+    </div>
   </div>
-
 </template>
-<script setup>
+
+<script>
+import { ref, onMounted } from 'vue';
+import axios from 'axios';
+import { useRoute } from 'vue-router';
+
+export default {
+  setup() {
+    const route = useRoute();
+    const taskId = route.params.id;
+    const task = ref({});
+    const newStatus = ref('');
+
+    const openTask = async (taskId) => {
+      try {
+        const response = await axios.get(`http://192.168.5.213:8080/get_task/${taskId}/`);
+        task.value = response.data;
+      } catch (error) {
+        console.error('Ошибка при получении задачи:', error);
+      }
+    };
+
+    const updateStatus = async () => {
+      try {
+        const data = { status: newStatus.value };
+        await axios.post(`http://192.168.5.213:8080/update_status/${taskId}/`, data);
+        task.value.status = newStatus.value;
+        newStatus.value = ''; // Очищаем поле после обновления статуса
+      } catch (error) {
+        console.error('Ошибка при обновлении статуса задачи:', error);
+      }
+    };
+
+    const getFileNameFromURL = (url) => {
+      return url.split('/').pop();
+    };
+
+    const getFileDownloadUrl = (file) => {
+      return `http://192.168.5.213:8080/download_file/${getFileNameFromURL(file)}`;
+    };
+
+    onMounted(() => {
+      openTask(taskId);
+    });
+
+    return {
+      task,
+      newStatus,
+      updateStatus,
+      getFileNameFromURL,
+      getFileDownloadUrl,
+    };
+  },
+};
 </script>
+
+<style scoped>
+.task-title {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.task-info {
+  margin-left: 20px;
+}
+
+.section-title {
+  font-size: 18px;
+  margin-top: 20px;
+}
+
+.status-change {
+  margin-left: 20px;
+}
+</style>
