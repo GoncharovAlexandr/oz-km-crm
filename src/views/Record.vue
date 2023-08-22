@@ -40,7 +40,7 @@ export default {
 
     const openTask = async (taskId) => {
       try {
-        const response = await axios.get(`http://av22.pythonanywhere.com/get_task/${taskId}/`);
+        const response = await axios.get(`https://av22.pythonanywhere.com/get_task/${taskId}/`);
         task.value = response.data;
       } catch (error) {
         console.error('Ошибка при получении задачи:', error);
@@ -50,7 +50,7 @@ export default {
     const updateStatus = async () => {
       try {
         const data = { status: newStatus.value };
-        await axios.post(`http://av22.pythonanywhere.com/update_status/${taskId}/`, data);
+        await axios.post(`https://av22.pythonanywhere.com/update_status/${taskId}/`, data);
         task.value.status = newStatus.value;
         newStatus.value = ''; // Очищаем поле после обновления статуса
       } catch (error) {

@@ -44,7 +44,7 @@ export default {
   methods: {
     async fetchEmployeeData() {
       try {
-        const response = await axios.get('http://av22.pythonanywhere.com/get_employee_data');
+        const response = await axios.get('https://av22.pythonanywhere.com/get_employee_data');
         this.employees = response.data;
       } catch (error) {
         console.error('Ошибка при получении данных сотрудников:', error);

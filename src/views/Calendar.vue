@@ -32,7 +32,7 @@ export default {
   methods: {
     async fetchTasks() {
       try {
-        const response = await axios.get('http://av22.pythonanywhere.com/get_task_events');
+        const response = await axios.get('https://av22.pythonanywhere.com/get_task_events');
         const tasks = response.data;
 
         const events = tasks.map(task => ({

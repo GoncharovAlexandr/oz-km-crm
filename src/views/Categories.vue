@@ -109,7 +109,7 @@ const createTask = async () => {
   }
 
   try {
-    const response = await axios.post('http://av22.pythonanywhere.com/create_task/', formData, {
+    const response = await axios.post('https://av22.pythonanywhere.com/create_task/', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
